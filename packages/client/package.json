@@ -51,6 +51,7 @@
     "@gqlapp/i18n-common-react": "^0.1.0",
     "@gqlapp/module-client-react": "^0.1.0",
     "@gqlapp/payments-client-react": "^0.1.0",
+    "@gqlapp/pwa-client-react": "^1.0.0",
     "@gqlapp/reports-client-react": "^0.1.0",
     "@gqlapp/validation-common-react": "^0.1.0",
     "@loadable/component": "^5.10.1",

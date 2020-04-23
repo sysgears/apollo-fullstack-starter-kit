@@ -1,5 +1,6 @@
 {
-    "name": "",
+    "short_name": "AUSK",
+    "name": "apollo-universal-starter-kit",
     "icons": [
         {
             "src": "android-chrome-192x192.png",
@@ -12,7 +13,9 @@
             "type": "image/png"
         }
     ],
+    "start_url": ".",
     "theme_color": "#ffffff",
     "background_color": "#ffffff",
-    "display": "standalone"
+    "display": "standalone",
+    "orientation": "portrait"
 }

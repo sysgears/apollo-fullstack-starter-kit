@@ -62,6 +62,7 @@ const Html = ({ content, state, css, headElements, helmet }: HtmlProps) => (
     </head>
     <body {...helmet.bodyAttributes.toComponent()}>
       <div id="root" dangerouslySetInnerHTML={{ __html: content || '' }} />
+      <script src="initServiceWorker.js" />
       <script
         dangerouslySetInnerHTML={{
           __html: `window.__APOLLO_STATE__=${serialize(state, {
