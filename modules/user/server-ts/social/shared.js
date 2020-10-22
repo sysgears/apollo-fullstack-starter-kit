@@ -1,4 +1,5 @@
 import { access } from '@gqlapp/authentication-server-ts';
+import bcrypt from 'bcryptjs';
 import User from '../sql';
 
 export async function onAuthenticationSuccess(req, res) {
@@ -14,10 +15,12 @@ export async function onAuthenticationSuccess(req, res) {
 }
 
 export const registerUser = async ({ id, username, displayName, emails: [{ value }] }) => {
+  const passwordHash = await bcrypt.hash(id || username || displayName, 12); 
   return User.register({
     username: username || displayName,
     email: value,
-    password: id,
     isActive: true
-  });
+  },
+   passwordHash
+  );
 };
