@@ -1,0 +1,16 @@
+query {
+    currentUser {
+        username
+        profile {
+            firstName
+            lastName
+            fullName
+        }
+        auth {
+            facebook {
+                displayName
+                fbId
+            }
+        }
+    }
+}

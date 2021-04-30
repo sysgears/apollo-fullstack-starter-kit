@@ -1,0 +1,94 @@
+buildscript {
+    ext {
+        springBootVersion = '2.3.7.RELEASE'
+    }
+    repositories {
+        maven { url "https://plugins.gradle.org/m2/" }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+subprojects {
+    apply plugin: 'idea'
+    apply plugin: 'java'
+    apply plugin: 'java-library'
+    apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'org.springframework.boot'
+
+    group = 'com.sysgears'
+    version = 'release'
+
+    sourceCompatibility = 14
+
+    jar {
+        enabled = true
+    }
+    bootJar {
+        enabled = false
+    }
+    repositories {
+        mavenCentral()
+        jcenter()
+        maven { url "https://repo.spring.io/milestone" }
+        maven { url "https://plugins.gradle.org/m2/" }
+    }
+
+    dependencies {
+        //Spring Boot
+        implementation 'org.springframework.boot:spring-boot-starter-web'
+        implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+        implementation 'org.springframework.boot:spring-boot-starter-actuator'
+        implementation 'org.springframework.boot:spring-boot-starter-aop'
+        annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+
+        //Lombok
+        compileOnly "org.projectlombok:lombok:1.18.12"
+        annotationProcessor "org.projectlombok:lombok:1.18.12"
+
+        //H2 DataBase
+        implementation 'com.h2database:h2:1.4.200'
+
+        //GraphQL
+        implementation 'com.graphql-java-kickstart:graphql-spring-boot-starter:8.1.1'
+        runtimeOnly 'com.graphql-java-kickstart:graphiql-spring-boot-starter:8.1.1'
+        implementation 'com.graphql-java-kickstart:graphql-java-tools:6.3.0'
+        testImplementation 'com.graphql-java-kickstart:graphql-spring-boot-starter-test:8.1.1'
+
+        implementation "io.reactivex.rxjava2:rxjava"
+
+        testImplementation('org.springframework.boot:spring-boot-starter-test') {
+            exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+        }
+        testImplementation project(':app')
+    }
+
+    test {
+        useJUnitPlatform()
+        testLogging {
+            events "passed", "skipped", "failed", "standardOut", "standardError"
+        }
+        outputs.upToDateWhen { false }
+    }
+}
+
+project(':app') {
+    dependencies {
+        implementation project(':counter')
+        implementation project(':user')
+        implementation project(':authentication')
+        implementation project(':mailer')
+        implementation project(':contact')
+        implementation project(':upload')
+        implementation project(':post')
+        implementation project(':chat')
+        implementation project(':reports')
+        implementation project(':i18n')
+    }
+    bootJar {
+        enabled = true
+        launchScript()
+        mainClassName = 'com.sysgears.Application'
+    }
+}

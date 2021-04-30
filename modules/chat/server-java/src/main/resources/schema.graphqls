@@ -1,0 +1,87 @@
+scalar FileUpload
+
+type QuotedMessage {
+  id: Int
+  text: String
+  username: String
+  filename: String
+  path: String
+}
+
+# Message
+type Message {
+  id: Int!
+  text: String
+  userId: Int
+  createdAt: String
+  username: String
+  uuid: String
+  quotedId: Int
+  filename: String
+  path: String
+  quotedMessage: QuotedMessage
+}
+
+# Edges for Messages
+type MessageEdges {
+  node: Message
+  cursor: Int
+}
+
+# PageInfo for Messages
+type MessagePageInfo {
+  endCursor: Int
+  hasNextPage: Boolean
+}
+
+# Messages relay-style pagination query
+type Messages {
+  totalCount: Int
+  edges: [MessageEdges]
+  pageInfo: MessagePageInfo
+}
+
+extend type Query {
+  # Messages
+  messages(limit: Int, after: Int): Messages
+  # Message
+  message(id: Int!): Message
+}
+
+extend type Mutation {
+  # Create new message
+  addMessage(input: AddMessageInput!): Message
+  # Delete a message
+  deleteMessage(id: Int!): Message
+  # Edit a message
+  editMessage(input: EditMessageInput!): Message
+}
+
+# Input for addMessage Mutation
+input AddMessageInput {
+  text: String
+  userId: Int
+  uuid: String
+  quotedId: Int
+  attachment: FileUpload
+}
+
+# Input for editMessage Mutation
+input EditMessageInput {
+  id: Int!
+  text: String
+  userId: Int
+}
+
+extend type Subscription {
+  # Subscription fired when anyone changes messages list
+  messagesUpdated(endCursor: Int!): UpdateMessagesPayload
+  # messagesUpdated: UpdateMessagesPayload
+}
+
+# Payload for messagesUpdated Subscription
+type UpdateMessagesPayload {
+  mutation: String!
+  id: Int
+  node: Message!
+}

@@ -1,0 +1,3 @@
+mutation removeFile($id: Int!) {
+  removeFile(id: $id)
+}

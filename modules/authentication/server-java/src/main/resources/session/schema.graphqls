@@ -1,0 +1,4 @@
+extend type Mutation {
+  # Logout user
+  logout: String
+}

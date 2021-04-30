@@ -1,0 +1,113 @@
+# Post
+type Post {
+  id: Int!
+  title: String!
+  content: String!
+  comments: [Comment]
+}
+
+# Comment
+type Comment {
+  id: Int!
+  content: String!
+}
+
+# Edges for Posts
+type PostEdges {
+  node: Post
+  cursor: Int
+}
+
+# PageInfo for Posts
+type PostPageInfo {
+  endCursor: Int
+  hasNextPage: Boolean
+}
+
+# Posts relay-style pagination query
+type Posts {
+  totalCount: Int
+  edges: [PostEdges]
+  pageInfo: PostPageInfo
+}
+
+extend type Query {
+  # Posts pagination query
+  posts(limit: Int, after: Int): Posts
+  # Post
+  post(id: Int!): Post
+}
+
+extend type Mutation {
+  # Create new post
+  addPost(input: AddPostInput!): Post
+  # Delete a post
+  deletePost(id: Int!): Post
+  # Edit a post
+  editPost(input: EditPostInput!): Post
+  # Add comment to post
+  addComment(input: AddCommentInput!): Comment
+  # Delete a comment
+  deleteComment(input: DeleteCommentInput!): Comment
+  # Edit a comment
+  editComment(input: EditCommentInput!): Comment
+}
+
+# Input for addPost Mutation
+input AddPostInput {
+  title: String!
+  content: String!
+}
+
+# Input for editPost Mutation
+input EditPostInput {
+  id: Int!
+  title: String!
+  content: String!
+}
+
+# Input for addComment Mutation
+input AddCommentInput {
+  content: String!
+  # Needed for commentUpdated Subscription filter
+  postId: Int!
+}
+
+# Input for editComment Mutation
+input DeleteCommentInput {
+  id: Int!
+  # Needed for commentUpdated Subscription filter
+  postId: Int!
+}
+
+# Input for deleteComment Mutation
+input EditCommentInput {
+  id: Int!
+  content: String!
+  # Needed for commentUpdated Subscription filter
+  postId: Int!
+}
+
+extend type Subscription {
+  # Subscription for when editing a post
+  postUpdated(id: Int!): UpdatePostPayload
+  # Subscription for post list
+  postsUpdated(endCursor: Int!): UpdatePostPayload
+  # Subscription for comments
+  commentUpdated(postId: Int!): UpdateCommentPayload
+}
+
+# Payload for postsUpdated Subscription
+type UpdatePostPayload {
+  mutation: String!
+  id: Int!
+  node: Post
+}
+
+# Payload for commentUpdated Subscription
+type UpdateCommentPayload {
+  mutation: String!
+  id: Int
+  postId: Int!
+  node: Comment
+}

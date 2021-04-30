@@ -1,0 +1,35 @@
+mutation EditUser($input: EditUserInput!) {
+    editUser(input: $input) {
+        user {
+            id
+            username
+            role
+            isActive
+            email
+            profile{
+                fullName
+            }
+            auth {
+                google {
+                    googleId
+                    displayName
+                }
+                facebook {
+                    fbId
+                    displayName
+                }
+                github {
+                    ghId
+                    displayName
+                }
+                certificate {
+                    serial
+                }
+                linkedin {
+                    lnId
+                    displayName
+                }
+            }
+        }
+    }
+}

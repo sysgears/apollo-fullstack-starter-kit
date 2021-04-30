@@ -1,0 +1,11 @@
+query post($id: Int!) {
+  post(id: $id) {
+    id
+    title
+    content
+    comments {
+      id
+      content
+    }
+  }
+}

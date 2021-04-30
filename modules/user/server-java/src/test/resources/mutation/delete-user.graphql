@@ -1,0 +1,35 @@
+mutation DeleteUser($id: Int!) {
+    deleteUser(id: $id) {
+        user {
+            id
+            username
+            role
+            isActive
+            email
+            profile{
+                fullName
+            }
+            auth {
+                google {
+                    googleId
+                    displayName
+                }
+                facebook {
+                    fbId
+                    displayName
+                }
+                github {
+                    ghId
+                    displayName
+                }
+                certificate {
+                    serial
+                }
+                linkedin {
+                    lnId
+                    displayName
+                }
+            }
+        }
+    }
+}

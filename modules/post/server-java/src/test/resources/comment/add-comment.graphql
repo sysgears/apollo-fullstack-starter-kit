@@ -1,0 +1,6 @@
+mutation addComment($input: AddCommentInput!) {
+  addComment(input: $input) {
+    id
+    content
+  }
+}

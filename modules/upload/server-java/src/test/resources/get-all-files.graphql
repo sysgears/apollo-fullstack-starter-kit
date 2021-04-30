@@ -1,0 +1,9 @@
+query files {
+  files {
+    id
+    name
+    type
+    size
+    path
+  }
+}

@@ -1,0 +1,72 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+    show-sql: true
+  datasource:
+    driver-class-name: org.h2.Driver
+    password: ''
+    url: jdbc:h2:mem:apollo
+    username: sa
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+# Fill real host, username and password for working with mailer module
+  mail:
+    host: EMAIL_HOST
+    port: 587
+    username: EMAIL_USER
+    password: EMAIL_PASSWORD
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+  messages:
+    basename: i18n/messages
+graphql:
+  servlet:
+    exception-handlers-enabled: true
+    cors:
+      allowed-origins: "*"
+      allow-credentials: true
+    subscriptions:
+      apollo:
+        keep-alive-enabled: false
+      websocket:
+        path: /graphql
+graphiql:
+  enabled: true
+  endpoint:
+    subscriptions: /graphql
+  mapping: /graphiql
+  headers:
+    Authorization: Bearer generated-token
+  props:
+    variables:
+      headerEditorEnabled: true
+
+jwt:
+  secret: "676918AB4D29BFE59CCB943F3C09F5CC8FB3A8511E23E502B67DE95AB9A9D00C"
+  access-token-expiration-in-sec: 3600
+  refresh-token-expiration-in-sec: 604800
+
+app:
+  server:
+    baseUrl: "localhost:8080"
+  client:
+    baseUrl: "http://localhost:3000"
+  redirect:
+    confirm-registration: "${app.client.baseUrl}/login/?email-verified"
+    reset-password: "${app.client.baseUrl}/reset-password/"
+    profile: "${app.client.baseUrl}/profile"

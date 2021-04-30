@@ -1,0 +1,35 @@
+query {
+    users {
+        id
+        username
+        role
+        isActive
+        email
+        profile {
+            firstName
+            lastName
+            fullName
+        }
+        auth {
+            google {
+                googleId
+                displayName
+            }
+            facebook {
+                fbId
+                displayName
+            }
+            github {
+                ghId
+                displayName
+            }
+            certificate {
+                serial
+            }
+            linkedin {
+                lnId
+                displayName
+            }
+        }
+    }
+}

@@ -1,0 +1,11 @@
+mutation editPost($input: EditPostInput!) {
+  editPost(input: $input) {
+    id
+    title
+    content
+    comments {
+      id
+      content
+    }
+  }
+}

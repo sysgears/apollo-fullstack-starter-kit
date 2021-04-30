@@ -1,0 +1,30 @@
+query messages($limit: Int, $after: Int) {
+  messages(limit: $limit, after: $after) {
+    totalCount
+    edges {
+      cursor
+      node {
+        id
+        text
+        userId
+        createdAt
+        username
+        uuid
+        quotedId
+        filename
+        path
+        quotedMessage {
+          id
+          text
+          username
+          filename
+          path
+        }
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+  }
+}

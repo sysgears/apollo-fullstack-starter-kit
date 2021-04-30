@@ -1,0 +1,12 @@
+FROM openjdk:11-jdk as BUILD_IMAGE
+COPY ./packages/server-java ./packages/server-java
+COPY ./modules ./modules
+
+WORKDIR ./packages/server-java
+RUN ./gradlew clean bootJar
+
+FROM openjdk:11-jre-slim
+WORKDIR /server-java/
+COPY --from=BUILD_IMAGE /packages/server-java/app/build/libs/app-release.jar .
+EXPOSE 8080
+CMD ["java", "-jar", "app-release.jar"]

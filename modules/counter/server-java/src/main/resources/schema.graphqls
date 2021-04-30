@@ -1,0 +1,14 @@
+extend type Query {
+    serverCounter: Counter!
+}
+
+extend type Mutation {
+    addServerCounter(amount: Int!): Counter
+}
+
+extend type Subscription {
+    counterUpdated: Counter
+}
+type Counter {
+    amount: Int!
+}

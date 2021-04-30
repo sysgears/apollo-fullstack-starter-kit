@@ -1,0 +1,21 @@
+query GetUser($id: Int!){
+    user(id: $id) {
+        user {
+            id
+            username
+            role
+            isActive
+            email
+            profile {
+                firstName
+                lastName
+                fullName
+            }
+            auth{
+                certificate {
+                    serial
+                }
+            }
+        }
+    }
+}

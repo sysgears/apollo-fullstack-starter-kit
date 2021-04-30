@@ -1,0 +1,24 @@
+mutation AddUser($input: AddUserInput!) {
+    addUser(input: $input) {
+        user {
+            id
+            username
+            role
+            isActive
+            email
+            profile{
+                fullName
+            }
+            auth {
+                google {
+                    googleId
+                    displayName
+                }
+                facebook {
+                    fbId
+                    displayName
+                }
+            }
+        }
+    }
+}

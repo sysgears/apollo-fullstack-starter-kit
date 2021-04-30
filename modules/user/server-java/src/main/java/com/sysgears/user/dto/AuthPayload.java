@@ -1,0 +1,15 @@
+package com.sysgears.user.dto;
+
+import com.sysgears.authentication.model.jwt.Tokens;
+import com.sysgears.user.model.User;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class AuthPayload {
+    private User user;
+    private Tokens tokens;
+}

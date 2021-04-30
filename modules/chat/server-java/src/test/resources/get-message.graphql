@@ -1,0 +1,20 @@
+query message($id: Int!) {
+  message(id: $id) {
+    id
+    text
+    userId
+    createdAt
+    username
+    uuid
+    quotedId
+    filename
+    path
+    quotedMessage {
+      id
+      text
+      username
+      filename
+      path
+    }
+  }
+}

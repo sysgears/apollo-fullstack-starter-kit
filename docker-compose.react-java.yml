@@ -1,0 +1,48 @@
+version: '3'
+services:
+  apollo_java_server:
+    build:
+      context: .
+      dockerfile: Dockerfile-java
+    environment:
+      - JAVA_ENV=development
+    container_name: apollo_java_server
+    volumes:
+      - ./:${APP_DIR}
+      - ./modules:${APP_DIR}/modules
+      - ./packages/server-java/gradle/wrapper:${APP_DIR}/packages/server-java/gradle/wrapper
+      - ./packages/server-java/gradlew:${APP_DIR}/packages/server-java/gradlew
+    ports:
+      - 8080:8080
+    stdin_open: true
+    tty: true
+    network_mode: host
+
+  apollo_client:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        APP_DIR: ${APP_DIR}
+    depends_on:
+      - apollo_java_server
+    environment:
+      - NODE_ENV=development
+      - SERVER_HOST=apollo_java_server:8080
+    container_name: apollo_client
+    tty: true
+    stdin_open: true
+    volumes:
+      - ./:${APP_DIR}
+      - ${APP_DIR}/build
+      - client_node_modules:${APP_DIR}/node_modules
+    working_dir: ${APP_DIR}
+    user: node
+    command: >
+      sh -c 'cmp -s yarn.lock node_modules/yarn.lock || yarn install --frozen-lockfile && cp -f yarn.lock node_modules/yarn.lock && yarn watch-client'
+    ports:
+      - 3000:3000
+    network_mode: host
+
+volumes:
+  client_node_modules:

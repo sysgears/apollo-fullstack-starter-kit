@@ -1,0 +1,21 @@
+query posts($limit: Int, $after: Int) {
+  posts(limit: $limit, after: $after) {
+    totalCount
+    edges {
+      cursor
+      node {
+        id
+        title
+        content
+        comments {
+          id
+          content
+        }
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+  }
+}
